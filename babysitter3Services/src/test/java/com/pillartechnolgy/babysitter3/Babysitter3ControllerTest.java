@@ -19,6 +19,7 @@ public class Babysitter3ControllerTest {
 
     @Test
     public void shouldReturnBabysitterName(){
-        assertThat(controller.whoIsBabysitter(),  is("Mitch"));
+        Babysitter result = controller.babysitter();
+        assertThat(result.getName(),  is("Mitch"));
     }
 }
