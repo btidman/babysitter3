@@ -1,0 +1,34 @@
+
+<div>
+  <label>#:{{selectedGig.id}}</label>
+  <label>start:
+    <input [(ngModel)]="selectedGig.start" placeholder="start">
+  </label>
+  <label>end:
+    <input [(ngModel)]="selectedGig.end" placeholder="end">
+  </label>
+  <label>pay:{{selectedGig.pay}}</label>
+  <div *ngIf="selectedGig.id">
+    <button (click)="saveGig()">Save</button>
+  </div>
+  <div *ngIf="!selectedGig.id">
+    <button (click)="saveNewGig()">Create</button>
+  </div>
+</div>
+
+
+
+<table class="table">
+  <tr>
+    <th>#</th>
+    <th>Start</th>
+    <th>End</th>
+    <th>Pay</th>
+  </tr>
+  <tr *ngFor="let gig of gigs" (click)="selectGig(gig)">
+    <td>{{gig.id}}</td>
+    <td>{{gig.start}}</td>
+    <td>{{gig.end}}</td>
+    <td>{{gig.pay}}</td>
+  </tr>
+</table>

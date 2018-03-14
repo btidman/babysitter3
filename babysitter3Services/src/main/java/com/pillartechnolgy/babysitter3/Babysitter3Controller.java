@@ -4,28 +4,32 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @RestController
 public class Babysitter3Controller {
 
-    @Getter @Setter
-    private String babysitterName;
+    @Autowired
+    private GigRepository repository;
 
-    @RequestMapping()
+    @RequestMapping(method = RequestMethod.GET)
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Babysitter> babysitter(){
-        List<Babysitter> sitters = new ArrayList<Babysitter>();
-        //sitters.add();
-        return new ResponseEntity(new Babysitter(1, "Mitch"), HttpStatus.OK);
+    public ResponseEntity<List<Gig>> gigs(){
+        return new ResponseEntity<List<Gig>>(repository.findAll(), HttpStatus.OK);
+    }
+
+
+    @RequestMapping(path="gigs", method = { RequestMethod.POST, RequestMethod.PATCH, RequestMethod.PUT }, consumes = "application/json")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Gig> createGig(@RequestBody Gig postedGig){
+
+        repository.save(postedGig);
+
+        return new ResponseEntity<Gig>(postedGig, HttpStatus.OK);
     }
 }
